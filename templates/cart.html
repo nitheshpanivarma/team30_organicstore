@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Cart{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+
+
+<div >
+	<div class="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
+	  <div class="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
+		<div class="flex items-start justify-between">
+		  <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+			<br><br>
+			<h1 align="center" style="font-size: 40px;"><strong>Cart</strong></h1>
+			<br>
+		  </h2>
+		</div>
+
+		<div class="mt-8">
+		  <div class="flow-root">
+			<ul role="list" class="-my-6 divide-y divide-gray-200">
+			{% if not products %}
+			<li align="center">Your cart is empty</li>
+			{% else %}
+			{% for row in products %}
+			  <li class="py-6 flex">
+				<div class="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
+				  <img src={{url_for('static', filename='uploads/'+row[3])}} alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="w-full h-full object-center object-cover">
+				</div>
+				
+				<div class="ml-4 flex-1 flex flex-col">
+				  <div>
+					<div class="flex justify-between text-base font-medium text-gray-900">
+					  <h3>
+						<a href="#">
+						  {{row[1]}}
+						</a>
+					  </h3>
+					  <p class="ml-4">
+						${{row[2]}}
+					  </p>
+					</div>
+					<p class="mt-1 text-sm text-gray-500">
+					  Organic
+					</p>
+				  </div>
+				  <div class="flex-1 flex items-end justify-between text-sm">
+
+					<div class="flex">
+					  <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500"><a href="/removeFromCart?productId={{row[0]}}">Remove</a></button>
+					</div>
+				  </div>
+				</div>
+			  </li>
+			{% endfor %}			
+			</ul>
+		  </div>
+
+		  <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
+            <div class="flex justify-between text-base font-medium text-gray-900">
+              <p>Subtotal</p>
+              <p>${{totalPrice}}</p>
+            </div>
+            <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+            <div class="mt-6">
+              <a class="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700" href="/checkout">Checkout</a>
+            </div>
+			{% endif %}
+            <div class="mt-6 flex justify-center text-sm text-center text-gray-500">
+              <p>
+             <button type="button" class="text-indigo-600 font-medium hover:text-indigo-500"><a href="/">Continue Shopping</a><span aria-hidden="true"> &rarr;</span></button>
+              </p>
+            </div>
+          </div>
+
+		</div>
+	  </div>
+
+
+{% endblock %}
